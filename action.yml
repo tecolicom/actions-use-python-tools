@@ -4,6 +4,7 @@ inputs:
   tools:     { required: true,  type: string }
   cache:     { required: false, type: string, default: yes }
   cache-gen: { required: false, type: string, default: v1 }
+  pip:       { required: false, type: string, default: pip3 }
   sudo:      { required: false, type: boolean }
 
 outputs:
@@ -52,17 +53,19 @@ runs:
       if: steps.setup.outputs.cache == 'no' || steps.cache.outputs.cache-hit != 'true'
       shell: bash
       run: |
+        pip="${{ inputs.pip }}"
         sudo= ; [ "${{ inputs.sudo }}" == true ] && sudo=sudo
-        $sudo pip install ${{ inputs.tools }}
+        $sudo $pip install ${{ inputs.tools }}
 
     - id: archive
       if: steps.setup.outputs.cache != 'no' && steps.cache.outputs.cache-hit != 'true'
       shell: bash
       run: |
+        pip="${{ inputs.pip }}"
         sudo= ; [ "${{ inputs.sudo }}" == true ] && sudo=sudo
         tools="${{ inputs.tools }}"
         archive="${{ steps.setup.outputs.archive }}"
         list=/tmp/pip-list.out
-        $sudo ./pip-list.sh $tools > $list
+        $sudo env PIP=$pip ./pip-list.sh $tools > $list
         $sudo tar -cvzf $archive -T $list
         ls -l $archive
