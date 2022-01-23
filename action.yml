@@ -67,6 +67,6 @@ runs:
         tools="${{ inputs.tools }}"
         archive="${{ steps.setup.outputs.archive }}"
         list=/tmp/$pip-list.out
-        $sudo env PIP=$pip ./pip-list.sh $tools > $list
+        $sudo env PIP=$pip $GITHUB_ACTION_PATH/pip-list.sh $tools > $list
         $sudo tar -cvzf $archive -T $list
         ls -l $archive
