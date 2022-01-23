@@ -1,4 +1,4 @@
-# actions-use-apt-tools
+# actions-use-python-tools
 
 ![actions-use-python-tools](https://github.com/office-tecoli/actions-use-python-tools/actions/workflows/test.yml/badge.svg)
 
@@ -22,7 +22,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 #   pip:       { required: false, type: string, default: pip3 }
 #   sudo:      { required: false, type: boolean }
 
-- uses: office-tecoli/actions-use-apt-tools@v0
+- uses: office-tecoli/actions-use-python-tools@v0
   with:
 
     # python packages
