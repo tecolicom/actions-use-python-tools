@@ -25,6 +25,7 @@ runs:
         tools="${{ inputs.tools }}"
         hash=$( (uname -mrsv; echo $gen $tools) | md5sum | awk '{print $1}' )
         [ "$cache" == 'workflow' ] && hash=$hash-${{ github.run_id }}
+        [ "${{ inputs.sudo }}" == true ] && hash=$hash-sudo
         cat << END
         ::set-output name=cache::$cache
         ::set-output name=archive::/tmp/python-package.tz
