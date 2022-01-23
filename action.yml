@@ -1,4 +1,4 @@
-name: install/cache apt tools
+name: install/cache python tools
 
 inputs:
   tools:     { required: true,  type: string }
@@ -66,7 +66,7 @@ runs:
         sudo= ; [ "${{ inputs.sudo }}" == true ] && sudo=sudo
         tools="${{ inputs.tools }}"
         archive="${{ steps.setup.outputs.archive }}"
-        list=/tmp/pip-list.out
+        list=/tmp/$pip-list.out
         $sudo env PIP=$pip ./pip-list.sh $tools > $list
         $sudo tar -cvzf $archive -T $list
         ls -l $archive
