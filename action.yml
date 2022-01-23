@@ -22,9 +22,10 @@ runs:
           yes|workflow) cache="${{ inputs.cache }}" ;;
           *)            cache=no ;;
         esac
+        pip="${{ inputs.pip }}"
         gen="${{ inputs.cache-gen }}"
         tools="${{ inputs.tools }}"
-        hash=$( (uname -mrsv; echo $gen $tools) | md5sum | awk '{print $1}' )
+        hash=$( (uname -mrsv; $pip --version; echo $gen $tools) | md5sum | awk '{print $1}' )
         [ "$cache" == 'workflow' ] && hash=$hash-${{ github.run_id }}
         [ "${{ inputs.sudo }}" == true ] && hash=$hash-sudo
         cat << END
