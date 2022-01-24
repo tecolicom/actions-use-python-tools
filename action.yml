@@ -33,7 +33,7 @@ runs:
         [ "${{ inputs.sudo }}" == true ] && hash=$hash-sudo
         cat << END
         ::set-output name=cache::$cache
-        ::set-output name=archive::/tmp/python-package.tz
+        ::set-output name=archive::$HOME/python-package.tz
         ::set-output name=hash::$hash
         END
 
