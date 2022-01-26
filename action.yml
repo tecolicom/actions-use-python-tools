@@ -28,9 +28,9 @@ runs:
         ##
         if [ "$sudo" == true ]
         then
-          if [[ "$($python --version)" =~ '([0-9]+.[0-9]+)' ]]
+          if [[ "$($pip --version 2>&1)" =~ python[0-9]+\.[0-9]+ ]]
           then
-            directory="/usr/local/bin /usr/local/lib/python$BASH_REMATCH[1]"
+            directory="/usr/local/bin /usr/local/lib/${BASH_REMATCH[0]}"
           else
             directory="/usr/local/bin $(echo /usr/local/lib/python*)"
           fi
