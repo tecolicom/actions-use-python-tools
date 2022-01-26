@@ -16,7 +16,7 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: diff-highlight
+          tools: legit
       - run: (cd __test__; . run.sh )
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   cached:
@@ -28,7 +28,7 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: diff-highlight
+          tools: legit
       - run: (cd __test__; . run.sh )
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
   no-cache:
@@ -40,7 +40,7 @@ jobs:
         id: action
         with:
           cache: no
-          tools: diff-highlight
+          tools: legit
       - run: (cd __test__; . run.sh )
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   cache-gen:
@@ -52,7 +52,7 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: diff-highlight
+          tools: legit
           cache-gen: v2
       - run: (cd __test__; . run.sh )
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
@@ -65,7 +65,7 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: diff-highlight
+          tools: legit
           sudo: true
       - run: (cd __test__; . run.sh )
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
@@ -78,7 +78,7 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: diff-highlight
+          tools: legit
           sudo: true
       - run: (cd __test__; . run.sh )
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
