@@ -27,13 +27,18 @@ runs:
         ## XXX need to find a way to get it from pip or something
         ##
         set -x
+        install_dir=/usr/local
         if [ "$sudo" == true ]
         then
           if [[ "$($pip --version 2>&1)" =~ \(python\ ([0-9]+\.[0-9]+)\) ]]
           then
-            directory="/usr/local/bin /usr/local/lib/${BASH_REMATCH[1]}"
+            lib_python="$install_dir/lib/python${BASH_REMATCH[1]}"
+          fi
+          if [ -d "$lib_python" ]
+          then
+            directory="$install_dir/bin $lib_python"
           else
-            directory="/usr/local/bin $(echo /usr/local/lib/python*)"
+            directory="$install_dir/bin $(echo $install_dir/lib/python*)"
           fi
           command="sudo $pip install"
         else
