@@ -18,7 +18,6 @@ runs:
     - id: setup
       shell: bash
       run: |
-        set -x
         version="${{ inputs.version }}"
         python=python$version
         pip=pip$version
@@ -27,11 +26,12 @@ runs:
         ## XXX install directory should no be hard coded
         ## XXX need to find a way to get it from pip or something
         ##
+        set -x
         if [ "$sudo" == true ]
         then
-          if [[ "$($pip --version 2>&1)" =~ python[0-9]+\.[0-9]+ ]]
+          if [[ "$($pip --version 2>&1)" =~ \(python\ ([0-9]+\.[0-9]+)\) ]]
           then
-            directory="/usr/local/bin /usr/local/lib/${BASH_REMATCH[0]}"
+            directory="/usr/local/bin /usr/local/lib/${BASH_REMATCH[1]}"
           else
             directory="/usr/local/bin $(echo /usr/local/lib/python*)"
           fi
