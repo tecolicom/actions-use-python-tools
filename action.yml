@@ -4,7 +4,7 @@ inputs:
   tools:     { required: true,  type: string }
   cache:     { required: false, type: string, default: yes }
   cache-gen: { required: false, type: string, default: v1 }
-  pip:       { required: false, type: string, default: pip3 }
+  version:   { required: false, type: string, default: 3 }
   sudo:      { required: false, type: boolean }
 
 outputs:
@@ -18,13 +18,26 @@ runs:
     - id: setup
       shell: bash
       run: |
-        if [ "${{ inputs.sudo }}" == true ]
+        version="${{ inputs.version }}"
+        python=python$version
+        pip=pip$version
+        sudo="${{ inputs.sudo }}"
+        ##
+        ## XXX install directory should no be hard coded
+        ## XXX need to find a way to get it from pip or something
+        ##
+        if [ "$sudo" == true ]
         then
-          directory=/usr/local
-          command="sudo pip install"
+          if [[ "$($python --version)" =~ '([0-9]+.[0-9]+)' ]]
+          then
+            directory="/usr/local/bin /usr/local/lib/python$BASH_REMATCH[1]"
+          else
+            directory="/usr/local/bin $(echo /usr/local/lib/python*)"
+          fi
+          command="sudo $pip install"
         else
           directory=$HOME/.local
-          command="pip install"
+          command="$pip install"
         fi
         echo "::set-output name=command::$command"
         echo "::set-output name=directory::$directory"
