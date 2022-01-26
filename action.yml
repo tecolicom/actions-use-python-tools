@@ -26,24 +26,23 @@ runs:
         ## XXX install directory should no be hard coded
         ## XXX need to find a way to get it from pip or something
         ##
-        set -x
-        install_dir=/usr/local
+        prefix=/usr/local
         if [ "$sudo" == true ]
         then
-          if [[ "$($pip --version 2>&1)" =~ \(python\ ([0-9]+\.[0-9]+)\) ]]
-          then
-            lib_python="$install_dir/lib/python${BASH_REMATCH[1]}"
-          fi
-          if [ -d "$lib_python" ]
-          then
-            directory="$install_dir/bin $lib_python"
-          else
-            directory="$install_dir/bin $(echo $install_dir/lib/python*)"
-          fi
-          command="sudo $pip install"
+            if [[ "$($pip --version 2>&1)" =~ \(python\ ([0-9]+\.[0-9]+)\) ]]
+            then
+                lib_python="$prefix/lib/python${BASH_REMATCH[1]}"
+            fi
+            if [ -d "$lib_python" ]
+            then
+                directory="$prefix/bin $lib_python"
+            else
+                directory="$prefix/bin $(echo $prefix/lib/python*)"
+            fi
+            command="sudo $pip install"
         else
-          directory=$HOME/.local
-          command="$pip install"
+            directory=$HOME/.local
+            command="$pip install"
         fi
         echo "::set-output name=command::$command"
         echo "::set-output name=directory::$directory"
