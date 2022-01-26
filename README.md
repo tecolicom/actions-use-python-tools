@@ -17,9 +17,9 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 ```yaml
 # inputs:
 #   tools:     { required: true,  type: string }
+#   version:   { required: false, type: string, default: 3 }
 #   cache:     { required: false, type: string, default: yes }
 #   cache-gen: { required: false, type: string, default: v1 }
-#   pip:       { required: false, type: string, default: pip3 }
 #   sudo:      { required: false, type: boolean }
 
 - uses: office-tecoli/actions-use-python-tools@v0
@@ -27,6 +27,10 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
     # python packages
     tools: ''
+
+    # python version
+    # Default: 3
+    version: '3'
 
     # Cache strategey
     #
@@ -43,11 +47,6 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
     # Default: v1
     cache-gen: v1
 
-    # Specify pip command
-    #
-    # Default: pip3
-    pip: ''
-
     # Set sudo status
     #
     # Default: false
@@ -59,5 +58,5 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 ```yaml
 - uses: office-tecoli/actions-use-python-tools@v0
   with:
-    tools: diff-highlight
+    tools: legit
 ```
