@@ -30,7 +30,7 @@ runs:
         if [ "$sudo" != true ]
         then
             directory=$HOME/.local
-            command="$pip install"
+            command="$pip install --user"
         else
             if [[ "$($pip --version 2>&1)" =~ \(python\ ([0-9]+\.[0-9]+)\) ]]
             then
