@@ -21,28 +21,26 @@ runs:
         version="${{ inputs.version }}"
         python=python$version
         pip=pip$version
-        sudo="${{ inputs.sudo }}"
+        [ "${{ inputs.sudo }}" == true ] && sudo=sudo
         ##
         ## XXX install directory should no be hard coded
         ## XXX need to find a way to get it from pip or something
         ##
+        command="$sudo $pip install"
+        directory=$HOME/.local
         prefix=/usr/local
-        if [ "$sudo" != true ]
+        if [ "$sudo" != '' ] || [ -w $prefix/bin ]
         then
-            directory=$HOME/.local
-            command="$pip install --user"
-        else
             if [[ "$($pip --version 2>&1)" =~ \(python\ ([0-9]+\.[0-9]+)\) ]]
             then
                 lib_python="$prefix/lib/python${BASH_REMATCH[1]}"
             fi
             if [ -d "$lib_python" ]
             then
-                directory="$prefix/bin $lib_python"
+                directory="$directory $prefix/bin $lib_python"
             else
-                directory="$prefix/bin $(echo $prefix/lib/python*)"
+                directory="$directory $prefix/bin $(echo $prefix/lib/python*)"
             fi
-            command="sudo $pip install"
         fi
         echo "::set-output name=python::$python"
         echo "::set-output name=pip::$pip"
