@@ -20,7 +20,7 @@ runs:
         version="${{ inputs.version }}"
         python="python$version"
         pip="pip$version"
-        command="sudo $pip install"
+        command="sudo $pip install --prefix /usr/local"
         prefix=/usr/local
         if [[ "$($pip --version 2>&1)" =~ \(python\ ([0-9]+\.[0-9]+)\) ]]
         then
