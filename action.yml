@@ -2,10 +2,9 @@ name: install/cache python tools
 
 inputs:
   tools:     { required: true,  type: string }
-  cache:     { required: false, type: string, default: yes }
-  cache-gen: { required: false, type: string, default: v1 }
-  version:   { required: false, type: string, default: 3 }
-  sudo:      { required: false, type: boolean }
+  cache:     { required: false, type: string,  default: yes }
+  cache-gen: { required: false, type: string,  default: v1 }
+  version:   { required: false, type: string,  default: 3 }
 
 outputs:
   cache-hit:
@@ -21,26 +20,15 @@ runs:
         version="${{ inputs.version }}"
         python=python$version
         pip=pip$version
-        [ "${{ inputs.sudo }}" == true ] && sudo=sudo
-        ##
-        ## XXX install directory should no be hard coded
-        ## XXX need to find a way to get it from pip or something
-        ##
-        command="$sudo $pip install"
-        directory=$HOME/.local
-        prefix=/usr/local
-        if [ "$sudo" != '' ] || [ -w $prefix/bin ]
+        command="sudo $pip install"
+        [[ "$($pip show -f pip)" =~ Location:\ ((.*)/lib/python[0-9\.]+) ]]
+        prefix=${BASH_REMATCH[2]}
+        lib_python=${BASH_REMATCH[1]}
+        if [ -d "$lib_python" ]
         then
-            if [[ "$($pip --version 2>&1)" =~ \(python\ ([0-9]+\.[0-9]+)\) ]]
-            then
-                lib_python="$prefix/lib/python${BASH_REMATCH[1]}"
-            fi
-            if [ -d "$lib_python" ]
-            then
-                directory="$directory $prefix/bin $lib_python"
-            else
-                directory="$directory $prefix/bin $(echo $prefix/lib/python*)"
-            fi
+            directory="$prefix/bin $lib_python"
+        else
+            directory="$prefix/bin $(echo $prefix/lib/python*)"
         fi
         echo "::set-output name=python::$python"
         echo "::set-output name=pip::$pip"
