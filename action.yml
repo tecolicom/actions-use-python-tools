@@ -21,9 +21,11 @@ runs:
         python=python$version
         pip=pip$version
         command="sudo $pip install"
-        [[ "$($pip show -f pip)" =~ Location:\ ((.*)/lib/python[0-9\.]+) ]]
-        prefix=${BASH_REMATCH[2]}
-        lib_python=${BASH_REMATCH[1]}
+        prefix=/usr/local
+        if [[ "$($pip --version 2>&1)" =~ \(python\ ([0-9]+\.[0-9]+)\) ]]
+        then
+            lib_python=$prefix/lib/python${BASH_REMATCH[1]}
+        fi
         if [ -d "$lib_python" ]
         then
             directory="$prefix/bin $lib_python"
