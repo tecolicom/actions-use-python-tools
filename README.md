@@ -20,7 +20,6 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 #   version:   { required: false, type: string, default: 3 }
 #   cache:     { required: false, type: string, default: yes }
 #   cache-gen: { required: false, type: string, default: v1 }
-#   sudo:      { required: false, type: boolean }
 
 - uses: office-tecoli/actions-use-python-tools@v0
   with:
@@ -46,11 +45,6 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
     #
     # Default: v1
     cache-gen: v1
-
-    # Set sudo status
-    #
-    # Default: false
-    sudo:
 ```
 
 ## Example
@@ -60,3 +54,8 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
   with:
     tools: legit
 ```
+
+## Issues
+
+- Always install as a root.  I could't find a good way to install
+  under user directory across ubuntu and macos.
