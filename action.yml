@@ -44,6 +44,8 @@ runs:
             fi
             command="sudo $pip install"
         fi
+        echo "::set-output name=python::$python"
+        echo "::set-output name=pip::$pip"
         echo "::set-output name=command::$command"
         echo "::set-output name=directory::$directory"
 
@@ -55,3 +57,10 @@ runs:
         target:    ${{ inputs.tools }}
         cache:     ${{ inputs.cache }}
         cache-gen: ${{ inputs.cache-gen }}
+
+    - id: check
+      shell: bash
+      run: |
+        tools="${{ inputs.tools }}"
+        pip="${{ steps.setup.outputs.pip}}"
+        $pip show -f $tools
