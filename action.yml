@@ -17,6 +17,7 @@ runs:
     - id: setup
       shell: bash
       run: |
+        : setup
         version="${{ inputs.version }}"
         python="python$version"
         pip="pip$version"
@@ -49,6 +50,7 @@ runs:
     - id: check
       shell: bash
       run: |
+        : check
         tools="${{ inputs.tools }}"
         pip="${{ steps.setup.outputs.pip}}"
         $pip show -f $tools
