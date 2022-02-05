@@ -17,7 +17,7 @@ runs:
     - id: setup
       shell: bash
       run: |
-        : setup ${{ github.repository }}
+        : setup use-python-tools
         version="${{ inputs.version }}"
         python="python$version"
         pip="pip$version"
