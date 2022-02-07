@@ -19,7 +19,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 #   tools:   { required: true,  type: string }
 #   version: { required: false, type: string, default: 3 }
 #   cache:   { required: false, type: string, default: yes }
-#   key:     { required: false, type: string, default: v1 }
+#   key:     { required: false, type: string }
 
 - uses: office-tecoli/actions-use-python-tools@v0
   with:
