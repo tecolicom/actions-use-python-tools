@@ -5,6 +5,7 @@ inputs:
   cache:     { required: false, type: string,  default: yes }
   cache-gen: { required: false, type: string,  default: v1 }
   version:   { required: false, type: string,  default: 3 }
+  key:       { required: false, type: string }
 
 outputs:
   cache-hit:
@@ -23,7 +24,8 @@ runs:
         pip="pip$version"
         prefix=/usr/local
         command="sudo $pip install --prefix $prefix"
-        if [[ "$($pip --version 2>&1)" =~ \(python\ ([0-9]+\.[0-9]+)\) ]]
+        pip_version="$($pip --version 2>&1)"
+        if [[ "$pip_version" =~ \(python\ ([0-9]+\.[0-9]+)\) ]]
         then
             lib_python="$prefix/lib/python${BASH_REMATCH[1]}"
         fi
@@ -33,16 +35,21 @@ runs:
         else
             directory="$prefix/bin $(echo $prefix/lib/python*)"
         fi
+        given_key="${{ inputs.key }}"
+        version_key="$( echo "$pip_version" | (md5sum||md5) | awk '{print $1}' )"
+        key="${given_key:+$given_key-}${version_key}"
         echo "::set-output name=python::$python"
         echo "::set-output name=pip::$pip"
         echo "::set-output name=command::$command"
         echo "::set-output name=directory::$directory"
+        echo "::set-output name=key::$key"
 
     - id: update
       uses: office-tecoli/actions-install-and-cache@v0
       with:
         command:   ${{ steps.setup.outputs.command }}
         directory: ${{ steps.setup.outputs.directory }}
+        key:       ${{ steps.setup.outputs.key }}
         target:    ${{ inputs.tools }}
         cache:     ${{ inputs.cache }}
         cache-gen: ${{ inputs.cache-gen }}
