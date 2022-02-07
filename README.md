@@ -55,3 +55,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
 - Always install as a root.  I could't find a good way to install
   under user directory across ubuntu and macos.
+
+## See Also
+
+### [office-tecoli/actions](https://github.com/office-tecoli/actions)
