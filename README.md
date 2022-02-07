@@ -31,7 +31,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
     # Default: 3
     version: '3'
 
-    # Cache strategey
+    # Cache strategy
     #
     # yes:      activate cache
     # no:       no cache
