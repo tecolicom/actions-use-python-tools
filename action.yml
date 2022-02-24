@@ -1,4 +1,9 @@
 name: install/cache python tools
+description: 'GitHub Action to install and cache Python tools'
+author: 'Office TECOLI, LLC'
+branding: 
+  color: 'orange'
+  icon: 'plus-square'
 
 inputs:
   tools:     { required: true,  type: string }
