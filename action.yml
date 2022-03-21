@@ -1,4 +1,4 @@
-name: install/cache python tools
+name: install-and-cache python tools
 description: 'GitHub Action to install and cache Python tools'
 author: 'Office TECOLI, LLC'
 branding: 
