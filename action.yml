@@ -7,8 +7,8 @@ branding:
 
 inputs:
   tools:     { required: true,  type: string }
-  cache:     { required: false, type: string,  default: yes }
-  version:   { required: false, type: string,  default: 3 }
+  cache:     { required: false, type: string, default: yes }
+  version:   { required: false, type: string, default: 3 }
   key:       { required: false, type: string }
 
 outputs:
@@ -49,14 +49,13 @@ runs:
         echo "::set-output name=key::$key"
 
     - id: update
-      uses: tecoli-com/actions-install-and-cache@v0.3
+      uses: tecoli-com/actions-install-and-cache@v0.4
       with:
-        command: ${{ steps.setup.outputs.command }}
-        path:    ${{ steps.setup.outputs.directory }}
-        key:     ${{ steps.setup.outputs.key }}
-        target:  ${{ inputs.tools }}
-        cache:   ${{ inputs.cache }}
-        sudo:    true
+        run:   ${{ steps.setup.outputs.command }} ${{ inputs.tools }}
+        path:  ${{ steps.setup.outputs.directory }}
+        key:   ${{ steps.setup.outputs.key }}
+        cache: ${{ inputs.cache }}
+        sudo:  true
 
     - id: check
       shell: bash
