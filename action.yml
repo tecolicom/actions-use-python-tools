@@ -42,11 +42,13 @@ runs:
         given_key="${{ inputs.key }}"
         version_key="$( echo "$pip_version" | (md5sum||md5) | awk '{print $1}' )"
         key="${given_key:+$given_key-}${version_key}"
-        echo "::set-output name=python::$python"
-        echo "::set-output name=pip::$pip"
-        echo "::set-output name=command::$command"
-        echo "::set-output name=directory::$directory"
-        echo "::set-output name=key::$key"
+        cat << END >> $GITHUB_OUTPUT
+        python=$python
+        pip=$pip
+        command=$command
+        directory=$directory
+        key=$key
+        END
 
     - id: update
       uses: tecoli-com/actions-install-and-cache@v0.4
