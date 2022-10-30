@@ -21,7 +21,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 #   cache:   { required: false, type: string, default: yes }
 #   key:     { required: false, type: string }
 
-- uses: tecoli-com/actions-use-python-tools@v0
+- uses: tecolicom/actions-use-python-tools@v1
   with:
 
     # python packages
@@ -46,7 +46,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 ## Example
 
 ```yaml
-- uses: tecoli-com/actions-use-python-tools@v0
+- uses: tecolicom/actions-use-python-tools@v1
   with:
     tools: legit
 ```
