@@ -1,6 +1,6 @@
 # actions-use-python-tools
 
-![actions-use-python-tools](https://github.com/tecoli-com/actions-use-python-tools/actions/workflows/test.yml/badge.svg)
+![actions-use-python-tools](https://github.com/tecolicom/actions-use-python-tools/actions/workflows/test.yml/badge.svg)
 
 This GitHub action isntall python-based packages and cache them for
 later use.  When executed next time with same package list, and any
@@ -58,4 +58,4 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
 ## See Also
 
-### [tecoli-com/actions](https://github.com/tecoli-com/actions)
+### [tecolicom/actions](https://github.com/tecolicom/actions)
