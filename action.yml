@@ -42,12 +42,12 @@ runs:
         given_key="${{ inputs.key }}"
         version_key="$( echo "$pip_version" | (md5sum||md5) | awk '{print $1}' )"
         key="${given_key:+$given_key-}${version_key}"
-        cat << END >> $GITHUB_OUTPUT
-        python=$python
-        pip=$pip
-        command=$command
-        directory=$directory
-        key=$key
+        sed 's/^ *//' << END >> $GITHUB_OUTPUT
+            python=$python
+            pip=$pip
+            command=$command
+            directory=$directory
+            key=$key
         END
 
     - id: update
