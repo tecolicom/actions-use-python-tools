@@ -25,23 +25,29 @@ runs:
         : setup use-python-tools
         version="${{ inputs.version }}"
         python="python$version"
-        pip="pip$version"
-        prefix=/usr/local
+        pip="$python -m pip"
+        $python --version
+        $pip --version
+        prefix=/usr
+        install_base="$prefix/local"
         command="$pip install --prefix $prefix"
         pip_version="$($pip --version 2>&1)"
         if [[ "$pip_version" =~ \(python\ ([0-9]+\.[0-9]+)\) ]]
         then
-            lib_python="$prefix/lib/python${BASH_REMATCH[1]}"
+            lib_python="$install_base/lib/python${BASH_REMATCH[1]}"
         fi
         if [ -d "$lib_python" ]
         then
-            directory="$prefix/bin $lib_python"
+            directory="$install_base/bin $lib_python"
         else
-            directory="$prefix/bin $(echo $prefix/lib/python*)"
+            directory="$install_base/bin $(echo $install_base/lib/python*)"
         fi
         given_key="${{ inputs.key }}"
         version_key="$( echo "$pip_version" | (md5sum||md5) | awk '{print $1}' )"
         key="${given_key:+$given_key-}${version_key}"
+        sed 's/^ *//' << END >> $GITHUB_ENV
+            PIP_ROOT_USER_ACTION=ignore
+        END
         sed 's/^ *//' << END >> $GITHUB_OUTPUT
             python=$python
             pip=$pip
