@@ -1,3 +1,7 @@
+## v1.2
+
+- fix for install strategy update introduced in python3.10
+
 ## v1.1
 
 - Version 1.1
