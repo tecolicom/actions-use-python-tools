@@ -26,16 +26,12 @@ runs:
         version="${{ inputs.version }}"
         python="python$version"
         pip="$python -m pip"
-        prefix=/usr/local
         install_base=/usr/local
         $python --version
         $pip --version
         pip_version="$($pip --version 2>&1)"
         if [[ "$pip_version" =~ \(python\ (([0-9]+)\.([0-9]+))\) ]]
         then
-            if [[ "$OSTYPE" != "darwin"* ]]; then
-                (( BASH_REMATCH[2] >= 3 && BASH_REMATCH[3] >= 10 )) && prefix=/usr
-            fi
             lib_python="$install_base/lib/python${BASH_REMATCH[1]}"
         fi
         if [ -d "$lib_python" ]
@@ -44,7 +40,7 @@ runs:
         else
             directory="$install_base/bin $(echo $install_base/lib/python*)"
         fi
-        command="$pip install --prefix $prefix"
+        command="$pip install"
         given_key="${{ inputs.key }}"
         version_key="$( echo "$pip_version" | (md5sum||md5) | awk '{print $1}' )"
         key="${given_key:+$given_key-}${version_key}"
