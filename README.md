@@ -2,7 +2,7 @@
 
 ![actions-use-python-tools](https://github.com/tecolicom/actions-use-python-tools/actions/workflows/test.yml/badge.svg)
 
-This GitHub action isntall python-based packages and cache them for
+This GitHub action installs python-based packages and cache them for
 later use.  When executed next time with same package list, and any
 other environment are not changed, installed files are extracted from
 the cached archive.
